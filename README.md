@@ -1,27 +1,31 @@
-# Training Laravel
-
-* Include `docker-compose.yml` to this repository.
-* Everyone launch server with `docker-compose up` on local device if we get source code from this repository.
-* Everyone find out result page on local device web browser.
-* Use `PHP7`, `Laravel`, `Nginx`, `MySQL`.
-* Add the necessary information to the `README.md`. The testers can launch the docker locally and describe it so that it can be viewed in a browser.
-
-
-# Deliverable image
-
-<img src="https://mevn-public.s3-ap-southeast-1.amazonaws.com/for-github-readme/Training_todo_web_app.gif"/>
-
-* The design of the deliverables does not matter, but those that are too rough are NG. You can use any JS & CSS framework you like.
-* Data should be persistent. The final data should be displayed even if it is accessed from another device.
-* Use English instead of Japanese in the UI.
-
-
-# Training flow
-
-1. Picking and moving to KANBAN, Move to `in Development` in Projects/Startup.
-2. Creating and developing git branches around KANBAN. The name of the git branch should be the number of the issue to be developed. For example, `issue-3`.
-3. Develop it.
-4. Notify with pull request when developping completed. In the pull request, be specific about what the tester should be testing.
-5. KANBAN Move to `Waiting for verification`.
-6. Tester performs test. You may proceed with the development of another KANBAN during the test.
-6. If validation completes successfully, it is merged into master. If there are any deficiencies, the pull request and KANBAN will be returned.
+<form action="{{route('todos.edit',$temp['id']) }}" method="POST">
+                                            @csrf
+                                            @method('GET')
+                                            <input type="hidden" name="id" value="{{$temp->id}}" />
+                                            <label class="customcheckbox m-b-20"><input type="checkbox" onclick="this.form.submit()"
+                                            <?php 
+                                            if ($temp->completed==TRUE):
+                                                echo 'checked';
+                                            
+                                            endif;
+                                            ?>
+                                            > <span
+                                            class="checkmark"></span> </label> </th>
+                                        </button>
+                                        </form>
+                                        
+public function edit($id)
+    {
+        $todo=TodosList::find($id);
+        $todo->completed=!$todo->completed;
+        $todo->save();
+        if($todo->completed==True)
+        {
+            return Redirect::back()->withErrors(['mess' => 'Completed','name' => $todo->name]);
+        }
+        return Redirect::back()->withErrors(['mess' => 'Working','name' => $todo->name]);
+    }
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
